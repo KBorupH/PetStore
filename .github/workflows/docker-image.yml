@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "prod" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "prod" ]
+    branches: [ "main" ]
 
 jobs:
 
@@ -27,7 +27,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: antonyanlinux/myapp:latest
+          dockerfile: Dockerfile
+          tags: KBorupH/PetStore:latest
       
       - name: deploying
         uses: appleboy/ssh-action@v0.1.8
@@ -37,8 +38,9 @@ jobs:
           password: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            docker image pull antonyanlinux/myapp:latest
-            docker container stop my-container
-            docker container rm my-container
-            docker container run -d --name my-container -p 80:5000 antonyanlinux/myapp
+            docker image pull KBorupH/PetStore:latest
+            docker container stop petstore
+            docker container rm petstore
+            docker container run -d --name petstore -p 80:5000 KBorupH/PetStore:latest
+            
         
