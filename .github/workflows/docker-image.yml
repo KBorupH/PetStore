@@ -28,7 +28,7 @@ jobs:
           context: .
           push: true
           file: Dockerfile
-          tags: KBorupH/PetStore:latest
+          tags: kboruph/petstore:latest
       
       - name: Deploying to server
         uses: appleboy/ssh-action@v0.1.8
@@ -38,9 +38,9 @@ jobs:
           password: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            docker image pull KBorupH/PetStore:latest
+            docker image pull kboruph/petstore:latest
             docker container stop petstore
             docker container rm petstore
-            docker container run -d --name petstore -p 80:5000 KBorupH/PetStore:latest
+            docker container run -d --name petstore -p 80:5000 kboruph/petstore:latest
             
         
