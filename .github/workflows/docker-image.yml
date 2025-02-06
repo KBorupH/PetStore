@@ -17,12 +17,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Lowercasing names for docker
+        run: |
+          echo "GIT_ACTOR=${OWNER,,}" >>${GITHUB_ENV}
+          echo "GIT_REPO=${REPO,,}" >>${GITHUB_ENV}
+        env:
+          ACTOR: '${{ github.actor }}'
+          REPO: '${{ github.repository }}'
   
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ env.GIT_ACTOR }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push to Docker hub
@@ -31,7 +39,7 @@ jobs:
           context: .
           push: true
           file: Dockerfile
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/${{ env.GIT_REPO }}:latest
       
       - name: Deploying to server
         uses: appleboy/ssh-action@v0.1.8
