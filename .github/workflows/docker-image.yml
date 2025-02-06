@@ -33,7 +33,7 @@ jobs:
           username: ${{ env.GIT_ACTOR }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push to Docker hub
+      - name: Build and push to Github Repo Registry
         uses: docker/build-push-action@v4
         with:
           context: .

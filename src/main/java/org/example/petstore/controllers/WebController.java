@@ -10,4 +10,9 @@ public class WebController {
     public String frontPage() {
         return "frontPage";
     }
+
+    @GetMapping("/about")
+    public String aboutPage() {
+        return "aboutPage";
+    }
 }
