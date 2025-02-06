@@ -52,6 +52,6 @@ jobs:
             docker image pull kboruph/petstore:latest
             docker container stop petstore
             docker container rm petstore
-            docker container run -d --name petstore -p 80:5000 kboruph/petstore:latest
+            docker container run -d --name petstore -p 24781:8080 kboruph/petstore:latest
             
         
